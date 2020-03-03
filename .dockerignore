@@ -1,0 +1,7 @@
+.idea
+README.md
+.gitignore
+docker-compose.yml
+Makefile
+.editorconfig
+.gitattributes
