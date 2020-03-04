@@ -4,6 +4,13 @@ predir:
 	sudo chmod 777 ./storage -R
 	if [ -d "./node_modules" ]; then sudo chown ${USER}:${USER} ./node_modules -R; fi
 	if [ -d "./public/build" ]; then sudo chown ${USER}:${USER} ./public/build -R; fi
+	cp .env.local .env
+	docker-compose exec php composer install
+	docker-compose exec php php artisan ui vue --auth
+	docker-compose exec php php artisan migrate
+	docker-compose exec nodejs npm install
+	docker-compose exec nodejs npm run dev
+	make queue
 docker-up:
 	docker-compose up -d
 docker-down:
@@ -12,3 +19,5 @@ docker-build:
 	docker-compose up --build -d
 test:
 	docker-compose exec php vendor/bin/phpunit --colors=always
+queue:
+	docker-compose exec php php artisan queue:work
