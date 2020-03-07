@@ -1,7 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Domains\User;
 
+use App\Domains\User\Notification\MustSendAdmin;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,10 +11,11 @@ use Illuminate\Notifications\Notifiable;
  * @property mixed email
  * @property mixed name
  * @method static create(array $array)
+ * @method static make(array $array)
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, MustSendAdmin;
 
     /**
      * The attributes that are mass assignable.
