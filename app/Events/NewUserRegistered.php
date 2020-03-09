@@ -2,17 +2,17 @@
 
 namespace App\Events;
 
-use App\Domains\User\User;
+use App\Models\User;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class UserRegistered
+class NewUserRegistered
 {
     use Dispatchable, SerializesModels;
     /**
      * @var User
      */
-    private $user;
+    public $user;
 
     /**
      * Create a new event instance.

@@ -11,8 +11,18 @@
 |
 */
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('register', 'User/AuthController@register');
+Route::get('test', function () {
+    $user = User::find(10);
+    return view('mail.reg_info')->with(['user' => $user]);
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

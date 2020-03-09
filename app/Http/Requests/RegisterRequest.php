@@ -1,21 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\User\Requests;
+namespace App\Http\Requests;
 
+use App\Components\User\UserDto;
+use App\Contracts\ToDto;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends FormRequest implements ToDto
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,5 +20,15 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
+    }
+
+    public function toDto()
+    {
+        $userDto = new UserDto();
+        $userDto->name = $this->get('name', '');
+        $userDto->email = $this->get('email', '');
+        $userDto->password = $this->get('password', '');
+
+        return $userDto;
     }
 }
