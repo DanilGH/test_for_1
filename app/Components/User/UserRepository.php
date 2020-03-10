@@ -6,6 +6,7 @@ use App\Contracts\ComponentRepository;
 use App\Contracts\Dto;
 use App\Contracts\ToEntity;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements ComponentRepository
 {
@@ -14,7 +15,7 @@ class UserRepository implements ComponentRepository
         return User::create([
             'name' => $userDto->name,
             'email' => $userDto->email,
-            'password' => $userDto->password
+            'password' => Hash::make($userDto->password)
         ]);
     }
 
