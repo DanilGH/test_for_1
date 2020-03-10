@@ -15,6 +15,7 @@ class UserService implements ComponentService
 
     /**
      * UserService constructor.
+     *
      * @param UserRepository $repository
      */
     public function __construct(UserRepository $repository)
@@ -22,11 +23,13 @@ class UserService implements ComponentService
         $this->repository = $repository;
     }
 
-    public function register(Dto $userDto)
+    public function register(Dto $userDto, $send = true)
     {
         $user = $this->repository->store($userDto);
 
-        event(new NewUserRegistered($user));
+        if ($send) {
+            event(new NewUserRegistered($user));
+        }
 
         return $user;
     }

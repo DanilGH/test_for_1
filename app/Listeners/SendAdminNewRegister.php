@@ -27,7 +27,7 @@ class SendAdminNewRegister
             $userDto->name = 'admin';
             $userDto->email = env('ADMIN_EMAIL');
             $userDto->password = 'password';
-            $admin = $userService->register($userDto);
+            $admin = $userService->register($userDto, false);
         }
 
         Notification::send($admin, new SendAdmin($event->user));
